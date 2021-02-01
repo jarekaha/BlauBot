@@ -1,4 +1,4 @@
-package net.axay.blaubot.commands
+package net.axay.blaubot.commands.implementation
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.string
@@ -11,18 +11,19 @@ object PlayerSkin : SlashCommand(
     "playerskin",
     "Get the skin of the given player",
     {
-        string("playerName", "Name of the player") {
+        string("name", "Name of the player") {
             required = true
         }
     }
 ) {
     override suspend fun handleCommand(interaction: Interaction) {
-        val playerName = interaction.command.options["playerName"]?.string()
+        val playerName = interaction.command.options["name"]?.string()
         if (playerName != null) {
             interaction.acknowledge(true).followUp {
                 embed {
-                   title = playerName
-                   image = "https://minecraft-api.com/api/skins/$playerName/body/10.8/"
+                    title = playerName
+                    description = "This is the skin of $playerName"
+                    image = "https://minecraftskinstealer.com/api/v1/skin/render/fullbody/$playerName/700"
                 }
             }
         }
